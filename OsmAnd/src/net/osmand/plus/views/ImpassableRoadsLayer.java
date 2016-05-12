@@ -205,24 +205,10 @@ public class ImpassableRoadsLayer extends OsmandMapLayer implements
 	@Override
 	public void applyNewObjectPosition(Object o, LatLon position, final ApplyMovedObjectCallback callback) {
 		if (o instanceof RouteDataObject) {
-			final RouteDataObject object = (RouteDataObject) o;
-			final OsmandApplication application = activity.getMyApplication();
-			application.getAvoidSpecificRoads().replaceImpassableRoad(activity, object, position, false, new AvoidSpecificRoadsCallback() {
-				@Override
-				public void onAddImpassableRoad(boolean success, RouteDataObject newObject) {
-					if (callback != null) {
-						callback.onApplyMovedObject(success, newObject);
-					}
-				}
-
-				@Override
-				public boolean isCancelled() {
-					if (callback != null) {
-						return callback.isCancelled();
-					}
-					return false;
-				}
-			});
+			RouteDataObject object = (RouteDataObject) o;
+			OsmandApplication application = activity.getMyApplication();
+			application.getDefaultRoutingConfig().removeImpassableRoad(object);
+			application.getAvoidSpecificRoads().addImpassableRoad(activity, position, false);
 		}
 	}
 }
