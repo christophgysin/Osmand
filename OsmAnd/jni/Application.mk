@@ -5,10 +5,14 @@ APP_SHORT_COMMANDS := true
 # Specify least supported Android platform version
 APP_PLATFORM := android-9
 
-ifeq ($(wildcard $(ANDROID_NDK)/toolchains/*-4.7),)
-	NDK_TOOLCHAIN_VERSION := 4.8
-else
+ifneq ($(wildcard $(ANDROID_NDK)/toolchains/*-4.7),)
 	NDK_TOOLCHAIN_VERSION := 4.7
+endif
+ifneq ($(wildcard $(ANDROID_NDK)/toolchains/*-4.8),)
+	NDK_TOOLCHAIN_VERSION := 4.8
+endif
+ifneq ($(wildcard $(ANDROID_NDK)/toolchains/*-4.9),)
+	NDK_TOOLCHAIN_VERSION := 4.9
 endif
 
 APP_ABI :=
